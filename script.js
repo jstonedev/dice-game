@@ -34,6 +34,20 @@ const changeActivePlayer = () => {
   }
 };
 
+const addToScore = () => {
+  if (!activePlayer) {
+    scores[0] += currentScore;
+    score0El.textContent = scores[0];
+    currentScore = 0;
+  } else {
+    scores[1] += currentScore;
+    score1El.textContent = scores[1];
+    currentScore = 0;
+  }
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  changeActivePlayer();
+};
+
 // Rolling dice functionality
 btnRoll.addEventListener('click', () => {
   // 1. Genertate random dice roll
@@ -57,3 +71,6 @@ btnRoll.addEventListener('click', () => {
     changeActivePlayer();
   }
 });
+
+// Hoding score functionality
+btnHold.addEventListener('click', addToScore);
