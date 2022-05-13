@@ -21,9 +21,9 @@ const scores = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
 
-// Helper Functions
+// Switch active player
 const changeActivePlayer = () => {
-  if (player0Section.classList.length === 3) {
+  if (activePlayer === 0) {
     player0Section.classList.remove('player--active');
     player1Section.classList.add('player--active');
     activePlayer = 1;
@@ -34,6 +34,7 @@ const changeActivePlayer = () => {
   }
 };
 
+// Holding score functionality
 const addToScore = () => {
   if (!activePlayer) {
     scores[0] += currentScore;
@@ -46,6 +47,30 @@ const addToScore = () => {
   }
   document.getElementById(`current--${activePlayer}`).textContent = 0;
   changeActivePlayer();
+};
+
+// Reset game
+const newGame = () => {
+  // reset starting score
+  scores[0] = 0;
+  scores[1] = 0;
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+
+  // hide dice
+  diceEl.classList.add('hidden');
+
+  // reset current score for both players
+  currentScore = 0;
+  document.getElementById(`current--0`).textContent = 0;
+  document.getElementById(`current--1`).textContent = 0;
+
+  // reset active player to 0
+  if (activePlayer) {
+    activePlayer = 0;
+  }
+  player1Section.classList.remove('player--active');
+  player0Section.classList.add('player--active');
 };
 
 // Rolling dice functionality
@@ -72,5 +97,8 @@ btnRoll.addEventListener('click', () => {
   }
 });
 
-// Hoding score functionality
+// Add current score to overall score
 btnHold.addEventListener('click', addToScore);
+
+// Reset the game
+btnNew.addEventListener('click', newGame);
